@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
-import { Grid, Nav, Navbar, NavItem, NavDropdown, MenuItem, Jumbotron, Button } from 'react-bootstrap'
+import { Button } from 'react-bootstrap'
 import $ from 'jquery'
+
+import Navigation from './Navigation'
 
 class App extends Component {
   constructor() {
     super()
     this.state = {
-      resumeScrollTop: 0,
+      currentScrollTop: 0,
+      nextScrollTop: 0,
       isScrolling: false,
       scrollRate: 100,
       reachedMaxScroll: false,
@@ -34,18 +37,19 @@ Nunc in scelerisque metus. Nunc ultricies, mi laoreet malesuada tempus, velit qu
   scrollDiv() {
     if(!this.state.isScrolling) {
       let promptDiv = document.getElementById('prompt-container')
-      let newScrollTop = (this.state.resumeScrollTop > 0) ? this.state.resumeScrollTop : 0
+      // let newScrollTop = (this.state.currentScrollTop > this.state.nextScrollTop) ? this.state.currentScrollTop : this.state.nextScrollTop
+      let newScrollTop = this.state.nextScrollTop
       let newReachedMaxScroll
       this.scrollInterval = setInterval(() => {
         this.setState({ isScrolling: true })
         $(promptDiv).animate({ scrollTop: newScrollTop }, 50, 'linear')
         newScrollTop += 5
         newReachedMaxScroll = promptDiv.scrollTop >= (promptDiv.scrollHeight - promptDiv.offsetHeight)
-        this.setState({ resumeScrollTop: newScrollTop })
+        this.setState({ currentScrollTop: newScrollTop })
         if (newReachedMaxScroll === true) {
           this.setState({
             reachedMaxScroll: newReachedMaxScroll,
-            resumeScrollTop: 0
+            currentScrollTop: 0
           })
           this.pauseScroll()
         }
@@ -58,49 +62,13 @@ Nunc in scelerisque metus. Nunc ultricies, mi laoreet malesuada tempus, velit qu
   render() {
     return (
       <div className='prompt-parent'>
-        <Navbar inverse fixedTop>
-          <Grid>
-            <Navbar.Header>
-              <Navbar.Brand>
-                <a href="/">React App</a>
-              </Navbar.Brand>
-              <Navbar.Toggle />
-            </Navbar.Header>
-            <Navbar.Collapse>
-              <Nav>
-                <NavItem eventKey={1} href="#">Link</NavItem>
-                <NavItem eventKey={2} href="#">Link</NavItem>
-                <NavDropdown eventKey={3} title="Dropdown" id="basic-nav-dropdown">
-                  <MenuItem eventKey={3.1}>Action</MenuItem>
-                  <MenuItem eventKey={3.2}>Another action</MenuItem>
-                  <MenuItem eventKey={3.3}>Something else here</MenuItem>
-                  <MenuItem divider />
-                  <MenuItem eventKey={3.3}>Separated link</MenuItem>
-                </NavDropdown>
-              </Nav>
-              <Nav pullRight>
-                <NavItem eventKey={1} href="#">Link Right</NavItem>
-                <NavItem eventKey={2} href="#">Link Right</NavItem>
-              </Nav>
-            </Navbar.Collapse>
-          </Grid>
-        </Navbar>
-        <Jumbotron>
-          <Grid>
-            <h1>Welcome to React</h1>
-            <p>
-              <Button
-                bsStyle="success"
-                bsSize="large"
-                href="http://react-bootstrap.github.io/components.html"
-                target="_blank">
-                View React Bootstrap Docs
-              </Button>
-            </p>
-          </Grid>
-        </Jumbotron>
+        <Navigation />
 
-        <div id='prompt-container' className='prompt-container'>
+        <div id='prompt-container' className='prompt-container' onScroll={() => {
+          let promptDiv = document.getElementById('prompt-container')
+          console.log('scrollTop', promptDiv.scrollTop)
+          this.setState({ nextScrollTop: promptDiv.scrollTop })
+        }}>
 
             {this.state.promptText}
             ---END---

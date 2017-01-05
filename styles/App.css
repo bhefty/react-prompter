@@ -29,6 +29,10 @@
   font-size: 72px;
   overflow: scroll;
   position: relative;
+  margin-top: 200px;
+}
+.prompt-container::-webkit-scrollbar {
+  display: none;
 }
 
 .prompt-flip-text {
