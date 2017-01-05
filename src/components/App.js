@@ -23,6 +23,7 @@ Nunc in scelerisque metus. Nunc ultricies, mi laoreet malesuada tempus, velit qu
     this.handleFlip = this.handleFlip.bind(this)
     this.scrollDiv = this.scrollDiv.bind(this)
     this.pauseScroll = this.pauseScroll.bind(this)
+    this.reverseScroll = this.reverseScroll.bind(this)
   }
   handleFlip() {
     let promptDiv = document.getElementById('prompt-container')
@@ -37,7 +38,6 @@ Nunc in scelerisque metus. Nunc ultricies, mi laoreet malesuada tempus, velit qu
   scrollDiv() {
     if(!this.state.isScrolling) {
       let promptDiv = document.getElementById('prompt-container')
-      // let newScrollTop = (this.state.currentScrollTop > this.state.nextScrollTop) ? this.state.currentScrollTop : this.state.nextScrollTop
       let newScrollTop = this.state.nextScrollTop
       let newReachedMaxScroll
       this.scrollInterval = setInterval(() => {
@@ -59,16 +59,49 @@ Nunc in scelerisque metus. Nunc ultricies, mi laoreet malesuada tempus, velit qu
     }
   }
 
+  reverseScroll() {
+    if(!this.state.isScrolling) {
+      let promptDiv = document.getElementById('prompt-container')
+      let newScrollTop = this.state.nextScrollTop
+      let newReachedMaxScroll
+      this.scrollInterval = setInterval(() => {
+        this.setState({ isScrolling: true })
+        $(promptDiv).animate({ scrollTop: newScrollTop }, 50, 'linear')
+        newScrollTop -= 5
+        newReachedMaxScroll = promptDiv.scrollTop === 0
+        console.log(promptDiv.scrollHeight - promptDiv.offsetHeight)
+        this.setState({ currentScrollTop: newScrollTop })
+        if (newReachedMaxScroll === true) {
+          this.setState({
+            reachedMaxScroll: newReachedMaxScroll,
+            currentScrollTop: 0
+          })
+          this.pauseScroll()
+        }
+      }, this.state.scrollRate)
+    } else {
+      this.pauseScroll()
+    }
+  }
+
   render() {
     return (
       <div className='prompt-parent'>
         <Navigation />
 
-        <div id='prompt-container' className='prompt-container' onScroll={() => {
-          let promptDiv = document.getElementById('prompt-container')
-          console.log('scrollTop', promptDiv.scrollTop)
-          this.setState({ nextScrollTop: promptDiv.scrollTop })
-        }}>
+        <div id='prompt-container' className='prompt-container noselect'
+          onScroll={() => {
+            let promptDiv = document.getElementById('prompt-container')
+            // console.log('scrollTop', promptDiv.scrollTop)
+            this.setState({ nextScrollTop: promptDiv.scrollTop })
+          }}
+          onClick={() => {
+            this.scrollDiv()
+          }}
+          onContextMenu={(e) => {
+            e.preventDefault()
+            this.reverseScroll()
+          }}>
 
             {this.state.promptText}
             ---END---
@@ -84,6 +117,10 @@ Nunc in scelerisque metus. Nunc ultricies, mi laoreet malesuada tempus, velit qu
           <Button onClick={() => {
             this.scrollDiv()
           }}>Scroll</Button>
+
+          <Button onClick={() => {
+            this.reverseScroll()
+          }}>Reverse</Button>
         </div>
       </div>
     );
