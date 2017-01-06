@@ -8,11 +8,8 @@ class App extends Component {
   constructor() {
     super()
     this.state = {
-      currentScrollTop: 0,
-      nextScrollTop: 0,
       isScrolling: false,
       scrollRate: 100,
-      reachedMaxScroll: false,
       promptText: `Prompting begin! Nam bibendum sapien at sapien finibus, molestie dapibus augue suscipit. Quisque finibus velit vel dui pulvinar aliquet. Vivamus ex tortor, ultricies ac mi eu, convallis tristique nulla. Pellentesque id sagittis felis. Integer at porta turpis, eu ornare mi. Ut pellentesque interdum justo eu placerat. Sed lectus augue, sollicitudin vel ante et, elementum fringilla nisi. Quisque tristique lorem dolor, at sodales diam commodo a. Nullam in nisl nec ligula scelerisque facilisis.
 
 Sed vulputate orci sollicitudin metus iaculis facilisis. Fusce ullamcorper metus purus, at ullamcorper nisi lacinia vulputate. Etiam a sapien tristique, rhoncus ex rutrum, commodo tellus. Nam ipsum est, eleifend ac neque eget, interdum tempor augue. Morbi non justo a dolor eleifend aliquam. Aliquam molestie sem vel aliquet molestie. Quisque facilisis ullamcorper odio, vel porta est blandit nec. Cras ac leo sit amet urna porttitor pharetra. Suspendisse commodo interdum justo, vel viverra ligula egestas at. Maecenas et dolor ac lectus cursus varius ac sit amet libero. Nam ac condimentum enim. Nam odio metus, dictum vitae diam at, egestas dignissim nibh. Sed nec molestie sem, quis mattis nunc. In pretium facilisis ex, ac dictum nulla pellentesque a.
@@ -21,10 +18,9 @@ Nunc in scelerisque metus. Nunc ultricies, mi laoreet malesuada tempus, velit qu
     }
     this.scrollInterval = () => undefined
     this.handleFlip = this.handleFlip.bind(this)
-    this.scrollDiv = this.scrollDiv.bind(this)
-    this.pauseScroll = this.pauseScroll.bind(this)
-    this.reverseScroll = this.reverseScroll.bind(this)
+    this.scrollPrompter = this.scrollPrompter.bind(this)
   }
+
   handleFlip() {
     let promptDiv = document.getElementById('prompt-container')
     promptDiv.classList.toggle('prompt-flip-text')
@@ -35,48 +31,20 @@ Nunc in scelerisque metus. Nunc ultricies, mi laoreet malesuada tempus, velit qu
     this.setState({ isScrolling: false })
   }
 
-  scrollDiv() {
-    if(!this.state.isScrolling) {
-      let promptDiv = document.getElementById('prompt-container')
-      let newScrollTop = this.state.nextScrollTop
-      let newReachedMaxScroll
+  scrollPrompter(direction) {
+    let promptDiv = document.getElementById('prompt-container')
+    let speed = promptDiv.scrollTop
+    if (!this.state.isScrolling) {
+      this.setState({isScrolling: true})
       this.scrollInterval = setInterval(() => {
-        this.setState({ isScrolling: true })
-        $(promptDiv).animate({ scrollTop: newScrollTop }, 50, 'linear')
-        newScrollTop += 5
-        newReachedMaxScroll = promptDiv.scrollTop >= (promptDiv.scrollHeight - promptDiv.offsetHeight)
-        this.setState({ currentScrollTop: newScrollTop })
-        if (newReachedMaxScroll === true) {
-          this.setState({
-            reachedMaxScroll: newReachedMaxScroll,
-            currentScrollTop: 0
-          })
-          this.pauseScroll()
-        }
-      }, this.state.scrollRate)
-    } else {
-      this.pauseScroll()
-    }
-  }
-
-  reverseScroll() {
-    if(!this.state.isScrolling) {
-      let promptDiv = document.getElementById('prompt-container')
-      let newScrollTop = this.state.nextScrollTop
-      let newReachedMaxScroll
-      this.scrollInterval = setInterval(() => {
-        this.setState({ isScrolling: true })
-        $(promptDiv).animate({ scrollTop: newScrollTop }, 50, 'linear')
-        newScrollTop -= 5
-        newReachedMaxScroll = promptDiv.scrollTop === 0
-        console.log(promptDiv.scrollHeight - promptDiv.offsetHeight)
-        this.setState({ currentScrollTop: newScrollTop })
-        if (newReachedMaxScroll === true) {
-          this.setState({
-            reachedMaxScroll: newReachedMaxScroll,
-            currentScrollTop: 0
-          })
-          this.pauseScroll()
+        $('#prompt-container').animate({ scrollTop: speed }, this.state.scrollRate, 'linear')
+        if (direction === 'forward') speed += 500
+        if (direction === 'backward') speed -= 500
+        if (
+            ((promptDiv.scrollTop >= (promptDiv.scrollHeight - promptDiv.offsetHeight)) && direction === 'forward') ||
+            ((promptDiv.scrollTop === 0) && direction === 'backward')
+          ) {
+            this.pauseScroll()
         }
       }, this.state.scrollRate)
     } else {
@@ -90,19 +58,14 @@ Nunc in scelerisque metus. Nunc ultricies, mi laoreet malesuada tempus, velit qu
         <Navigation />
 
         <div id='prompt-container' className='prompt-container noselect'
-          onScroll={() => {
-            let promptDiv = document.getElementById('prompt-container')
-            // console.log('scrollTop', promptDiv.scrollTop)
-            this.setState({ nextScrollTop: promptDiv.scrollTop })
-          }}
           onClick={() => {
-            this.scrollDiv()
+            this.scrollPrompter('forward')
           }}
           onContextMenu={(e) => {
             e.preventDefault()
-            this.reverseScroll()
+            this.scrollPrompter('backward')
           }}>
-
+            ---BEGIN---
             {this.state.promptText}
             ---END---
 
@@ -115,11 +78,11 @@ Nunc in scelerisque metus. Nunc ultricies, mi laoreet malesuada tempus, velit qu
               Mirror Text
           </Button>
           <Button onClick={() => {
-            this.scrollDiv()
+            this.scrollPrompter('forward')
           }}>Scroll</Button>
 
           <Button onClick={() => {
-            this.reverseScroll()
+            this.scrollPrompter('backward')
           }}>Reverse</Button>
         </div>
       </div>
