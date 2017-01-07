@@ -19,13 +19,13 @@ Nunc in scelerisque metus. Nunc ultricies, mi laoreet malesuada tempus, velit qu
     this.scrollInterval = () => undefined
     this.handleFlip = this.handleFlip.bind(this)
     this.scrollPrompter = this.scrollPrompter.bind(this)
-    this.handleKeyPress = this.handleKeyPress.bind(this)
+    this.handleKeyDown = this.handleKeyDown.bind(this)
+    this.handleKeyUp = this.handleKeyUp.bind(this)
   }
 
   componentDidMount() {
-    document.getElementById('prompt-container').addEventListener('keydown', (e) => {
-      this.handleKeyPress(e)
-    }, false)
+    document.getElementById('prompt-container').addEventListener('keydown', (e) => this.handleKeyDown(e), false)
+    document.getElementById('prompt-container').addEventListener('keyup', (e) => this.handleKeyUp(e), false)
   }
 
   handleFlip() {
@@ -59,14 +59,20 @@ Nunc in scelerisque metus. Nunc ultricies, mi laoreet malesuada tempus, velit qu
     }
   }
 
-  handleKeyPress(e) {
+  handleKeyDown(e) {
     e.preventDefault()
+    let top = document.getElementById('prompt-container').scrollTop
+
     switch (e.keyCode) {
       case 38:
-        console.log('up')
+        top -= 50
+        if (this.state.isScrolling) this.pauseScroll()
+        $('#prompt-container').animate({ scrollTop: top }, 80, 'linear')
         break
       case 40:
-        console.log('down')
+        top += 50
+        if (this.state.isScrolling) this.pauseScroll()
+        $('#prompt-container').animate({ scrollTop: top }, 80, 'linear')
         break
       case 32:
         if (this.state.isScrolling) {
@@ -76,7 +82,19 @@ Nunc in scelerisque metus. Nunc ultricies, mi laoreet malesuada tempus, velit qu
         }
         break
       default:
-        console.log('nope')
+        break
+    }
+  }
+
+  handleKeyUp(e) {
+    e.preventDefault()
+
+    switch (e.keyCode) {
+      case 38:
+      case 40:
+        this.scrollPrompter('forward')
+        break
+      default:
         break
     }
   }
