@@ -7,7 +7,9 @@ import Container from './Container'
 import Home from './components/Home/Home'
 import Login from './components/Login/Login'
 
-const auth = new AuthService('vTXrv6wu2uoMG7pWIYJlfn5XwAkeKDFE', 'bhefty.auth0.com')
+const AUTH0_CLIENT_ID = process.env.REACT_APP_AUTH0_CLIENT_ID
+const AUTH0_DOMAIN = process.env.REACT_APP_AUTH0_DOMAIN
+const auth = new AuthService(AUTH0_CLIENT_ID, AUTH0_DOMAIN)
 
 // validate authentication for private routes
 const requireAuth = (nextState, replace) => {

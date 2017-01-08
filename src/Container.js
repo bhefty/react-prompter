@@ -1,6 +1,6 @@
 import React, { PropTypes as T } from 'react'
-import { Jumbotron } from 'react-bootstrap'
-import styles from './styles.module.css'
+
+import Navigation from './components/Navigation'
 
 export class Container extends React.Component {
   static contextTypes = {
@@ -16,12 +16,12 @@ export class Container extends React.Component {
     }
 
     return (
-      <Jumbotron>
-        <h2 className={styles.mainTitle}>
+      <Navigation auth={this.props.route.auth}>
+        <h2>
           <img src="https://cdn.auth0.com/styleguide/1.0.0/img/badge.svg" alt="Auth0 Logo"/>
         </h2>
         {children}
-      </Jumbotron>
+      </Navigation>
     )
   }
 }

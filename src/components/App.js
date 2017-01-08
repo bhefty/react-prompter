@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { Button } from 'react-bootstrap'
 import $ from 'jquery'
 
-import Navigation from './Navigation'
-
 class App extends Component {
   constructor() {
     super()
@@ -102,7 +100,6 @@ Nunc in scelerisque metus. Nunc ultricies, mi laoreet malesuada tempus, velit qu
   render() {
     return (
       <div className='prompt-parent'>
-        <Navigation />
 
         <textarea readOnly id='prompt-container' className='prompt-container noselect'
           onClick={() => {

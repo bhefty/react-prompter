@@ -1,14 +1,46 @@
-import React, { Component } from 'react'
+import React, { Component, PropTypes as T } from 'react'
 import { Grid, Nav, Navbar, NavItem, NavDropdown, MenuItem } from 'react-bootstrap'
+import AuthService from '../utils/AuthService'
 
 class Navigation extends Component {
+  static contextTypes = {
+    router: T.object
+  }
+
+  static propTypes = {
+    location: T.object,
+    auth: T.instanceOf(AuthService)
+  }
+
+  constructor(props, context) {
+    super(props, context)
+    this.state = {
+      profile: props.auth.getProfile()
+    }
+    props.auth.on('profile_updated', (newProfile) => {
+      this.setState({ profile: newProfile })
+    })
+    this.onNavItemClick = this.onNavItemClick.bind(this)
+  }
+
+  onNavItemClick() {
+    if(!this.props.auth.loggedIn()) {
+      this.props.auth.login()
+    } else {
+      this.props.auth.logout()
+      this.context.router.push('/login')
+    }
+  }
+
   render() {
+    let authLink = (this.props.auth.loggedIn() ? 'Logout' : 'Login')
+    let greeting = (this.props.auth.loggedIn() ? `Hello, ${this.state.profile.nickname}!` : '')
     return (
       <Navbar inverse fixedTop>
         <Grid>
           <Navbar.Header>
             <Navbar.Brand>
-              <a href="/">React App</a>
+              <a href="/">React Prompter</a>
             </Navbar.Brand>
             <Navbar.Toggle />
           </Navbar.Header>
@@ -25,11 +57,12 @@ class Navigation extends Component {
               </NavDropdown>
             </Nav>
             <Nav pullRight>
-              <NavItem eventKey={1} href="#">Link Right</NavItem>
-              <NavItem eventKey={2} href="#">Link Right</NavItem>
+              <NavItem eventKey={1} disabled>{greeting}</NavItem>
+              <NavItem eventKey={2} onClick={this.onNavItemClick}>{authLink}</NavItem>
             </Nav>
           </Navbar.Collapse>
         </Grid>
+        {this.props.children}
       </Navbar>
     )
   }
