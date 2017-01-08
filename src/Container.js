@@ -17,9 +17,6 @@ export class Container extends React.Component {
 
     return (
       <Navigation auth={this.props.route.auth}>
-        <h2>
-          <img src="https://cdn.auth0.com/styleguide/1.0.0/img/badge.svg" alt="Auth0 Logo"/>
-        </h2>
         {children}
       </Navigation>
     )

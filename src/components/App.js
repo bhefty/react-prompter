@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Button } from 'react-bootstrap'
 import $ from 'jquery'
 
+import Prompt from '../api'
+
 class App extends Component {
   constructor() {
     super()
@@ -24,6 +26,9 @@ Nunc in scelerisque metus. Nunc ultricies, mi laoreet malesuada tempus, velit qu
   componentDidMount() {
     document.getElementById('prompt-container').addEventListener('keydown', (e) => this.handleKeyDown(e), false)
     document.getElementById('prompt-container').addEventListener('keyup', (e) => this.handleKeyUp(e), false)
+    Prompt.search('all', (result) => {
+      this.setState({promptText: result[1].text})
+    })
   }
 
   handleFlip() {

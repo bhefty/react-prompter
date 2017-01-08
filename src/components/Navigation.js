@@ -36,34 +36,37 @@ class Navigation extends Component {
     let authLink = (this.props.auth.loggedIn() ? 'Logout' : 'Login')
     let greeting = (this.props.auth.loggedIn() ? `Hello, ${this.state.profile.nickname}!` : '')
     return (
-      <Navbar inverse fixedTop>
-        <Grid>
-          <Navbar.Header>
-            <Navbar.Brand>
-              <a href="/">React Prompter</a>
-            </Navbar.Brand>
-            <Navbar.Toggle />
-          </Navbar.Header>
-          <Navbar.Collapse>
-            <Nav>
-              <NavItem eventKey={1} href="#">Link</NavItem>
-              <NavItem eventKey={2} href="#">Link</NavItem>
-              <NavDropdown eventKey={3} title="Dropdown" id="basic-nav-dropdown">
-                <MenuItem eventKey={3.1}>Action</MenuItem>
-                <MenuItem eventKey={3.2}>Another action</MenuItem>
-                <MenuItem eventKey={3.3}>Something else here</MenuItem>
-                <MenuItem divider />
-                <MenuItem eventKey={3.3}>Separated link</MenuItem>
-              </NavDropdown>
-            </Nav>
-            <Nav pullRight>
-              <NavItem eventKey={1} disabled>{greeting}</NavItem>
-              <NavItem eventKey={2} onClick={this.onNavItemClick}>{authLink}</NavItem>
-            </Nav>
-          </Navbar.Collapse>
-        </Grid>
+      <div>
+        <Navbar inverse staticTop>
+          <Grid>
+            <Navbar.Header>
+              <Navbar.Brand>
+                <a href="/">React Prompter</a>
+              </Navbar.Brand>
+              <Navbar.Toggle />
+            </Navbar.Header>
+            <Navbar.Collapse>
+              <Nav>
+                <NavItem eventKey={1} href="#">Link</NavItem>
+                <NavItem eventKey={2} href="#">Link</NavItem>
+                <NavDropdown eventKey={3} title="Dropdown" id="basic-nav-dropdown">
+                  <MenuItem eventKey={3.1}>Action</MenuItem>
+                  <MenuItem eventKey={3.2}>Another action</MenuItem>
+                  <MenuItem eventKey={3.3}>Something else here</MenuItem>
+                  <MenuItem divider />
+                  <MenuItem eventKey={3.3}>Separated link</MenuItem>
+                </NavDropdown>
+              </Nav>
+              <Nav pullRight>
+                <NavItem eventKey={1} disabled>{greeting}</NavItem>
+                <NavItem eventKey={2} onClick={this.onNavItemClick}>{authLink}</NavItem>
+              </Nav>
+            </Navbar.Collapse>
+          </Grid>
+        </Navbar>
         {this.props.children}
-      </Navbar>
+      </div>
+
     )
   }
 }

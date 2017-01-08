@@ -27,7 +27,7 @@ db.once('open', () => {
         console.log(err)
         return res(err)
       } else {
-        console.log(data)
+        console.log(typeof data)
         return res.json(data)
       }
     })
