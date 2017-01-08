@@ -13,6 +13,25 @@ const db = mongoose.connection
 db.on('error', console.error.bind(console, 'connection error:'))
 db.once('open', () => {
   console.log('connected!')
+
+  const router = express.Router()
+  let getScripts = (script, callback) => {
+    db.collection('scripts.co').find({}).toArray(callback)
+  }
+
+  app.get('/scripts', (req, res) => {
+    console.log('in /scripts')
+    let body = req.body
+    getScripts(body, (err, data) => {
+      if (err) {
+        console.log(err)
+        return res(err)
+      } else {
+        console.log(data)
+        return res.json(data)
+      }
+    })
+  })
 })
 
 let env = getClientEnvironment('')
@@ -22,7 +41,7 @@ app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:htt
 
 app.use(express.static(path.resolve(__dirname, '..', 'build')))
 
-app.get('*', (req, res) => {
+app.get('/', (req, res) => {
   res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'))
 })
 
