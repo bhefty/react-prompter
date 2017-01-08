@@ -1,1 +1,1 @@
-node server
+npm run start:server
