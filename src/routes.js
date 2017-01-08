@@ -10,6 +10,7 @@ import Login from './components/Login/Login'
 const AUTH0_CLIENT_ID = process.env.REACT_APP_AUTH0_CLIENT_ID
 const AUTH0_DOMAIN = process.env.REACT_APP_AUTH0_DOMAIN
 const auth = new AuthService(AUTH0_CLIENT_ID, AUTH0_DOMAIN)
+console.log(process.env.NODE_ENV)
 
 // validate authentication for private routes
 const requireAuth = (nextState, replace) => {

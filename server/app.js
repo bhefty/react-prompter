@@ -1,8 +1,14 @@
 const express = require('express')
 const morgan = require('morgan')
 const path = require('path')
+const mongoose = require('mongoose')
+const getClientEnvironment = require('../config/env')
 
 const app = express()
+
+// mongoose.connect()
+let env = getClientEnvironment('')
+console.log('process.env.NODE_ENV', env)
 
 app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] :response-time ms'))
 
