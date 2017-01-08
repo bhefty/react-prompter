@@ -8,7 +8,7 @@ const app = express()
 
 // mongoose.connect()
 let env = getClientEnvironment('')
-console.log('process.env.NODE_ENV', env)
+console.log('process.env', env)
 
 app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] :response-time ms'))
 

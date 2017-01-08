@@ -7,6 +7,7 @@ import Container from './Container'
 import Home from './components/Home/Home'
 import Login from './components/Login/Login'
 
+console.log('before configs')
 const AUTH0_CLIENT_ID = process.env.REACT_APP_AUTH0_CLIENT_ID
 const AUTH0_DOMAIN = process.env.REACT_APP_AUTH0_DOMAIN
 const auth = new AuthService(AUTH0_CLIENT_ID, AUTH0_DOMAIN)
