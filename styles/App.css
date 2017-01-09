@@ -91,3 +91,16 @@
 .mainTitle{
   text-align: center;
 }
+
+.Login {
+  text-align: center;
+}
+
+.Login .well {
+  max-width: 400px;
+  margin: 0 auto 10px;
+}
+
+.promptTextInput {
+  min-height: 500px;
+}
