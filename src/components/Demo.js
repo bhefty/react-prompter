@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import TextInput from './TextInput'
-import App from './App'
 
 class Demo extends Component {
   constructor(props) {
@@ -20,7 +19,7 @@ class Demo extends Component {
     if (this.state.promptText.length === 0) {
       renderView = (<TextInput onNewData={this.handleNewData} />)
     } else {
-      renderView = (<App />)
+      renderView = (<h1>temp</h1>)
     }
     return (
       <div className='Demo'>
