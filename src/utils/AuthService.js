@@ -1,5 +1,5 @@
 import { EventEmitter } from 'events'
-import { isTokenExpired } from './jwtHelper'
+// import { isTokenExpired } from './jwtHelper'
 import Auth0Lock from 'auth0-lock'
 import { browserHistory } from 'react-router'
 
@@ -26,16 +26,21 @@ export default class AuthService extends EventEmitter {
 
   _doAuthentication(authResult) {
     // Saves the user token
-    this.setToken(authResult.idToken)
+    this.setToken(authResult.accessToken)
     // navigate to the home route
     browserHistory.replace('/home')
     // Async loads the user profile data
-    this.lock.getProfile(authResult.idToken, (error, profile) => {
+    this.lock.getUserInfo(authResult.accessToken, (error, profile) => {
       if (error) {
         console.log('Error loading the Profile', error)
+        return
       } else {
         this.setProfile(profile)
       }
+      // profile.user_metadata = profile.user_metadata || {}
+      // this.storage.set('profile', JSON.stringify(profile))
+      // this.user = profile
+
     })
   }
 
@@ -52,7 +57,8 @@ export default class AuthService extends EventEmitter {
   loggedIn() {
     // Checks if there is a saved token and it's still valid
     const token = this.getToken()
-    return !!token && !isTokenExpired(token)
+    // return !!token && !isTokenExpired(token)
+    return !!token
   }
 
   setProfile(profile) {

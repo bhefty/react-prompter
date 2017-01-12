@@ -14,9 +14,6 @@ class Login extends Component {
 
   constructor(props, context) {
     super(props, context)
-    props.auth.on('profile_updated', (newProfile) => {
-      this.setState({ profile: newProfile })
-    })
     this.handleLogin = this.handleLogin.bind(this)
   }
 

@@ -12,11 +12,11 @@ const db = mongoose.connection
 
 db.on('error', console.error.bind(console, 'connection error:'))
 db.once('open', () => {
-  console.log('connected!')
+  console.log('connected to database!')
 
   const router = express.Router()
   let getScripts = (script, callback) => {
-    db.collection('scripts.co').find({}).toArray(callback)
+    db.collection('scripts.co').findOne({}).toArray(callback)
   }
 
   app.get('/scripts', (req, res) => {
