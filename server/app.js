@@ -15,21 +15,22 @@ db.once('open', () => {
   console.log('connected to database!')
 
   const router = express.Router()
-  let getScripts = (script, callback) => {
-    db.collection('scripts.co').findOne({}).toArray(callback)
+
+  let getScripts = (callback) => {
+    let scripts = []
+    db.collection('scripts.co').find({})
+      .toArray((err, data) => {
+        if (err) throw err
+        data.forEach((data) => {
+          scripts.push(data)
+        })
+        callback(scripts)
+      })
   }
 
-  app.get('/scripts', (req, res) => {
-    console.log('in /scripts')
-    let body = req.body
-    getScripts(body, (err, data) => {
-      if (err) {
-        console.log(err)
-        return res(err)
-      } else {
-        console.log(typeof data)
-        return res.json(data)
-      }
+  app.get('/api/all-scripts', (req, res) => {
+    getScripts((data) => {
+      return res.json(data)
     })
   })
 })
