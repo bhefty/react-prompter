@@ -9,7 +9,7 @@ class Prompter extends Component {
     this.state = {
       isScrolling: false,
       scrollSpeed: 10,
-      promptText: `Cras non ligula at turpis fringilla consectetur id in nisi. Fusce nisi magna, dignissim id nibh consequat, sagittis porta felis. Vestibulum lacus sem, venenatis vitae pellentesque bibendum, tempus ac ligula. Donec libero dolor, posuere eu ullamcorper vel, gravida imperdiet odio. Phasellus interdum justo eget bibendum rutrum. Ut blandit, ligula non condimentum blandit, elit neque hendrerit tellus, ac luctus odio elit eget enim. Vestibulum nisl est, pharetra quis lacinia quis, elementum vel ex. Sed suscipit, erat ut pretium venenatis, odio lectus placerat ligula, in consequat leo sapien ut justo. Curabitur porttitor justo sapien, eu ornare purus finibus eget. Ut interdum egestas.`
+      promptText: this.props.text
     }
     this.scrollInterval = () => undefined
     this.scrollPrompter = this.scrollPrompter.bind(this)
@@ -36,6 +36,10 @@ class Prompter extends Component {
   }
 
   resetText() {
+    this.setState({promptText: ''})
+  }
+
+  componentDidUnMount() {
     this.setState({promptText: ''})
   }
 
