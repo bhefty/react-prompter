@@ -33,8 +33,11 @@ class Navigation extends Component {
   }
 
   render() {
-    let authLink = (this.props.auth.loggedIn() ? 'Logout' : 'Login')
-    let greeting = (this.props.auth.loggedIn() ? `Hello, ${this.state.profile.nickname}!` : '')
+    let isLoggedIn = this.props.auth.loggedIn()
+    let authLink = (isLoggedIn ? 'Logout' : 'Login')
+    let greeting = (isLoggedIn ? `Hello, ${this.state.profile.nickname}!` : '')
+    let scriptsLink
+    if (isLoggedIn) scriptsLink = (<NavItem eventKey={2} href="home">Scripts</NavItem>)
     return (
       <div>
         <Navbar inverse staticTop>
@@ -47,8 +50,8 @@ class Navigation extends Component {
             </Navbar.Header>
             <Navbar.Collapse>
               <Nav>
-                <NavItem eventKey={1} href="#">Link</NavItem>
-                <NavItem eventKey={2} href="#">Link</NavItem>
+                <NavItem eventKey={1} href="demo">Quick Entry</NavItem>
+                {scriptsLink}
                 <NavDropdown eventKey={3} title="Dropdown" id="basic-nav-dropdown">
                   <MenuItem eventKey={3.1}>Action</MenuItem>
                   <MenuItem eventKey={3.2}>Another action</MenuItem>
