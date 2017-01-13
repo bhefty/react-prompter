@@ -14,7 +14,7 @@ class Demo extends Component {
   handleNewData(data) {
     this.setState({ promptText: data })
   }
-
+  
   render() {
     let renderView
     if (this.state.promptText.length === 0) {

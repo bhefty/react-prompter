@@ -1,5 +1,5 @@
-function search(query, cb) {
-  return fetch('scripts', {
+function fetchAllScripts(cb) {
+  return fetch('api/all-scripts', {
     accept: 'application/json',
   }).then(checkStatus)
     .then(parseJSON)
@@ -22,5 +22,5 @@ function parseJSON(response) {
   return response.json()
 }
 
-const Prompt = { search }
+const Prompt = { fetchAllScripts }
 export default Prompt

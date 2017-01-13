@@ -17,11 +17,26 @@ class Prompter extends Component {
     this.pauseScroll = this.pauseScroll.bind(this)
     this.handleKeyDown = this.handleKeyDown.bind(this)
     this.handleKeyUp = this.handleKeyUp.bind(this)
+    this.setText = this.setText.bind(this)
+    this.resetText = this.resetText.bind(this)
   }
 
   componentDidMount() {
     document.getElementById('prompt-container').addEventListener('keydown', (e) => this.handleKeyDown(e), false)
     document.getElementById('prompt-container').addEventListener('keyup', (e) => this.handleKeyUp(e), false)
+    this.setText(this.props.text)
+  }
+
+  componentWillUnmount() {
+    this.resetText()
+  }
+
+  setText(text) {
+    this.setState({promptText: text})
+  }
+
+  resetText() {
+    this.setState({promptText: ''})
   }
 
   componentDidUnMount() {
