@@ -1,4 +1,5 @@
 import React, { PropTypes as T } from 'react'
+import { connect } from 'react-redux'
 
 import Navigation from './containers/Navigation'
 
@@ -23,4 +24,4 @@ Container.contextTypes = {
   router: T.object
 }
 
-export default Container;
+export default connect()(Container);
