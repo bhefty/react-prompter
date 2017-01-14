@@ -6,7 +6,6 @@ import Container from './Container'
 import NotFound from './containers/NotFound'
 import Login from './containers/Login'
 import Demo from './containers/Demo'
-import ShowPrompter from './components/ShowPrompter'
 import Home from './containers/Home'
 
 const AUTH0_CLIENT_ID = process.env.REACT_APP_AUTH0_CLIENT_ID
@@ -27,7 +26,6 @@ const Routes = (props) => (
       <Route path='home' component={Home} onEnter={requireAuth} />
       <Route path='login' component={Login} />
       <Route path='demo' component={Demo} />
-      <Route path='prompter' component={ShowPrompter} />
       <Route path='*' component={NotFound} />
     </Route>
   </Router>
