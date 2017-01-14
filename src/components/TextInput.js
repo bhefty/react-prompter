@@ -1,37 +1,40 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Button } from 'react-bootstrap'
 
-class TextInput extends Component {
-  constructor(props) {
-    super(props)
-    this.onFormSubmit = this.onFormSubmit.bind(this)
-  }
+export default function TextInput(props) {
+  let { onNewData } = props
+  let input
+  // function onFormSubmit(e) {
+  //   e.preventDefault()
+  //   let data = ''
+  //   let promptText = this.refs.promptText.value
+  //
+  //   if (promptText.length > 0) {
+  //     data = promptText
+  //     this.refs.promptText.value = ''
+  //   }
+  //   onNewData(data)
+  // }
 
-  onFormSubmit(e) {
-    e.preventDefault()
-    let data = ''
-    let promptText = this.refs.promptText.value
+  return (
+    <form onSubmit={(e) => {
+      e.preventDefault()
+      let data = ''
+      let promptText = input.value
 
-    if (promptText.length > 0) {
-      data = promptText
-      this.refs.promptText.value = ''
-    }
-    this.props.onNewData(data)
-  }
-
-  render() {
-    return (
-      <form onSubmit={this.onFormSubmit}>
-        <div className='form-group'>
-          <label>Enter text to scroll below:</label>
-          <textarea className='form-control promptTextInput' ref='promptText' type='textarea' placeholder='Enter text here' />
-        </div>
-        <Button type='submit' bsStyle='primary'>
-          Submit
-        </Button>
-      </form>
-    )
-  }
+      if (promptText.length > 0) {
+        data = promptText
+        input.value = ''
+      }
+      onNewData(data)
+    }}>
+      <div className='form-group'>
+        <label>Enter text to scroll below:</label>
+        <textarea className='form-control promptTextInput' ref={node => input = node} type='textarea' placeholder='Enter text here' />
+      </div>
+      <Button type='submit' bsStyle='primary'>
+        Submit
+      </Button>
+    </form>
+  )
 }
-
-export default TextInput
