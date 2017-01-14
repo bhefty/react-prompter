@@ -4,7 +4,7 @@ import AuthService from './utils/AuthService'
 
 import Container from './Container'
 import NotFound from './containers/NotFound'
-import Login from './components/Login'
+import Login from './containers/Login'
 import Demo from './components/Demo'
 import ShowPrompter from './components/ShowPrompter'
 import Home from './components/Home'
