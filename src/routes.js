@@ -3,7 +3,7 @@ import { Router, Route, IndexRedirect } from 'react-router'
 import AuthService from './utils/AuthService'
 
 import Container from './Container'
-import NotFound from './components/NotFound'
+import NotFound from './containers/NotFound'
 import Login from './components/Login'
 import Demo from './components/Demo'
 import ShowPrompter from './components/ShowPrompter'
