@@ -3,15 +3,6 @@ import { Button } from 'react-bootstrap'
 import AuthService from '../utils/AuthService'
 
 class Login extends Component {
-  static contextTypes = {
-    router: T.object
-  }
-
-  static propTypes = {
-    location: T.object,
-    auth: T.instanceOf(AuthService)
-  }
-
   constructor(props, context) {
     super(props, context)
     this.handleLogin = this.handleLogin.bind(this)
@@ -42,6 +33,15 @@ class Login extends Component {
       </div>
     )
   }
+}
+
+Login.contextTypes = {
+  router: T.object
+}
+
+Login.propTypes = {
+  location: T.object,
+  auth: T.instanceOf(AuthService)
 }
 
 export default Login

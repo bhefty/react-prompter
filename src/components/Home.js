@@ -15,7 +15,8 @@ class Home extends Component {
 
   handleClick() {
     Prompt.fetchAllScripts((script) => {
-      this.setState({promptText: script[1].text})
+      // console.log('script', script.scripts[1].text)
+      this.setState({promptText: script.scripts[1].text})
     })
   }
 

@@ -1,5 +1,5 @@
 function fetchAllScripts(cb) {
-  return fetch('api/all-scripts', {
+  return fetch('api/all', {
     accept: 'application/json',
   }).then(checkStatus)
     .then(parseJSON)

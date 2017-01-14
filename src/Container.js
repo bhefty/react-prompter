@@ -3,10 +3,6 @@ import React, { PropTypes as T } from 'react'
 import Navigation from './components/Navigation'
 
 export class Container extends React.Component {
-  static contextTypes = {
-    router: T.object
-  }
-
   render() {
     let children = null;
     if (this.props.children) {
@@ -21,6 +17,10 @@ export class Container extends React.Component {
       </Navigation>
     )
   }
+}
+
+Container.contextTypes = {
+  router: T.object
 }
 
 export default Container;
