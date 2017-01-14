@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Prompter from './Prompter'
+import Prompter from '../containers/Prompter'
 
 class ShowPrompter extends Component {
   render() {

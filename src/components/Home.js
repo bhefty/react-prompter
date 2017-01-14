@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Button } from 'react-bootstrap'
 
-import Prompter from './Prompter'
+import Prompter from '../containers/Prompter'
 import Prompt from '../api'
 
 class Home extends Component {

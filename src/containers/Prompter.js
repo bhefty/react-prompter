@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import PromptText from './PromptText'
-import PrompterControls from './PrompterControls'
+import PromptText from '../components/PromptText'
+import PrompterControls from '../components/PrompterControls'
 import $ from 'jquery'
 
 class Prompter extends Component {

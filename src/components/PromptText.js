@@ -1,18 +1,15 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-class PromptText extends Component {
-  render() {
-    return (
-      <textarea readOnly id='prompt-container' className='prompt-container noselect'
-        onClick={() => {
-          this.props.onScrollPrompter('forward')
-        }}
-        onContextMenu={(e) => {
-          e.preventDefault()
-          this.props.onScrollPrompter('backward')
-        }} value={this.props.text}/>
-    )
-  }
+export default function PromptText(props) {
+  let { onScrollPrompter, text } = props
+  return (
+    <textarea readOnly id='prompt-container' className='prompt-container noselect'
+      onClick={() => {
+        onScrollPrompter('forward')
+      }}
+      onContextMenu={(e) => {
+        e.preventDefault()
+        onScrollPrompter('backward')
+      }} value={text}/>
+  )
 }
-
-export default PromptText
