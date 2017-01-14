@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
-import TextInput from './TextInput'
+
+import DemoView from '../components/DemoView'
+import TextInput from '../components/TextInput'
 import Prompter from '../containers/Prompter'
 
 class Demo extends Component {
@@ -23,9 +25,7 @@ class Demo extends Component {
       renderView = (<Prompter text={this.state.promptText}/>)
     }
     return (
-      <div className='Demo'>
-        {renderView}
-      </div>
+      <DemoView view={renderView} />
     )
   }
 }
