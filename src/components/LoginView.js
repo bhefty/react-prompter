@@ -2,7 +2,7 @@ import React from 'react'
 import { Button } from 'react-bootstrap'
 
 
-export default function LoginOptions(props) {
+export default function LoginView(props) {
   let { changeRoute, login } = props
   return (
     <div className='Login'>

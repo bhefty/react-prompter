@@ -1,6 +1,6 @@
 import React, { Component, PropTypes as T } from 'react'
 import AuthService from '../utils/AuthService'
-import LoginOptions from '../components/LoginOptions'
+import LoginView from '../components/LoginView'
 
 class Login extends Component {
   constructor(props, context) {
@@ -19,7 +19,7 @@ class Login extends Component {
 
   render() {
     return(
-      <LoginOptions changeRoute={this.handleRoute} login={this.handleLogin} />
+      <LoginView changeRoute={this.handleRoute} login={this.handleLogin} />
     )
   }
 }
