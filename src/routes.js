@@ -7,7 +7,7 @@ import NotFound from './containers/NotFound'
 import Login from './containers/Login'
 import Demo from './components/Demo'
 import ShowPrompter from './components/ShowPrompter'
-import Home from './components/Home'
+import Home from './containers/Home'
 
 const AUTH0_CLIENT_ID = process.env.REACT_APP_AUTH0_CLIENT_ID
 const AUTH0_DOMAIN = process.env.REACT_APP_AUTH0_DOMAIN
