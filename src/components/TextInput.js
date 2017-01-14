@@ -4,17 +4,6 @@ import { Button } from 'react-bootstrap'
 export default function TextInput(props) {
   let { onNewData } = props
   let input
-  // function onFormSubmit(e) {
-  //   e.preventDefault()
-  //   let data = ''
-  //   let promptText = this.refs.promptText.value
-  //
-  //   if (promptText.length > 0) {
-  //     data = promptText
-  //     this.refs.promptText.value = ''
-  //   }
-  //   onNewData(data)
-  // }
 
   return (
     <form onSubmit={(e) => {
