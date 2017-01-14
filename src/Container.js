@@ -1,6 +1,6 @@
 import React, { PropTypes as T } from 'react'
 
-import Navigation from './components/Navigation'
+import Navigation from './containers/Navigation'
 
 export class Container extends React.Component {
   render() {
