@@ -1,47 +1,48 @@
 import React, { Component, PropTypes as T } from 'react'
 import { Grid, Nav, Navbar, NavItem, NavDropdown, MenuItem } from 'react-bootstrap'
-import AuthService from '../utils/AuthService'
+import { LinkContainer } from 'react-router-bootstrap'
+import { Link } from 'react-router'
+
+import { connect } from 'react-redux'
+import * as actions from '../actions/actions'
 
 class Navigation extends Component {
   constructor(props, context) {
     super(props, context)
-    this.state = {
-      profile: props.auth.getProfile()
-    }
-    props.auth.on('profile_updated', (newProfile) => {
-      this.setState({ profile: newProfile })
-    })
     this.onNavItemClick = this.onNavItemClick.bind(this)
   }
 
   onNavItemClick() {
-    if(!this.props.auth.loggedIn()) {
-      this.props.auth.login()
+    let { dispatch } = this.props
+    if(!this.props.isAuthenticated) {
+      dispatch(actions.login())
     } else {
-      this.props.auth.logout()
+      dispatch(actions.logout())
       this.context.router.push('/login')
     }
   }
 
   render() {
-    let isLoggedIn = this.props.auth.loggedIn()
+    let isLoggedIn = this.props.isAuthenticated
     let authLink = (isLoggedIn ? 'Logout' : 'Login')
-    let greeting = (isLoggedIn ? `Hello, ${this.state.profile.nickname}!` : '')
+    let greeting = (isLoggedIn ? `Hello, ${this.props.profile.nickname}!` : '')
     let scriptsLink
-    if (isLoggedIn) scriptsLink = (<NavItem eventKey={2} href="home">Scripts</NavItem>)
+    if (isLoggedIn) scriptsLink = (<LinkContainer to='/home'><NavItem eventKey={2}>Scripts</NavItem></LinkContainer>)
     return (
       <div>
         <Navbar inverse staticTop>
           <Grid>
             <Navbar.Header>
               <Navbar.Brand>
-                <a href="/">React Prompter</a>
+                <Link to='/'>React Prompter</Link>
               </Navbar.Brand>
               <Navbar.Toggle />
             </Navbar.Header>
             <Navbar.Collapse>
               <Nav>
-                <NavItem eventKey={1} href="demo">Quick Entry</NavItem>
+                <LinkContainer to='/demo'>
+                  <NavItem eventKey={1}>Quick Entry</NavItem>
+                </LinkContainer>
                 {scriptsLink}
                 <NavDropdown eventKey={3} title="Dropdown" id="basic-nav-dropdown">
                   <MenuItem eventKey={3.1}>Action</MenuItem>
@@ -69,9 +70,4 @@ Navigation.contextTypes = {
   router: T.object
 }
 
-Navigation.propTypes = {
-  location: T.object,
-  auth: T.instanceOf(AuthService)
-}
-
-export default Navigation
+export default connect()(Navigation)

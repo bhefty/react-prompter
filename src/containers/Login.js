@@ -1,5 +1,7 @@
 import React, { Component, PropTypes as T } from 'react'
-import AuthService from '../utils/AuthService'
+import { connect } from 'react-redux'
+import * as actions from '../actions/actions'
+
 import LoginView from '../components/LoginView'
 
 class Login extends Component {
@@ -14,10 +16,12 @@ class Login extends Component {
   }
 
   handleLogin() {
-    this.props.auth.login()
+    let { dispatch } = this.props
+    dispatch(actions.login())
   }
 
   render() {
+    console.log('props', this.props)
     return(
       <LoginView changeRoute={this.handleRoute} login={this.handleLogin} />
     )
@@ -28,9 +32,4 @@ Login.contextTypes = {
   router: T.object
 }
 
-Login.propTypes = {
-  location: T.object,
-  auth: T.instanceOf(AuthService)
-}
-
-export default Login
+export default connect()(Login)

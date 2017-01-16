@@ -4,8 +4,7 @@ import path from 'path'
 import mongoose from 'mongoose'
 import bodyParser from 'body-parser'
 
-// Import required modules
-// import Routes from '../src/routes'
+// Import required DB modules
 import scripts from './routes/script.routes'
 import dummyData from './dummyData'
 
@@ -25,32 +24,7 @@ mongoose.connect(MONGO_URI, (error) => {
   // insert dummy data into DB
   dummyData()
 })
-// const db = mongoose.connection
-//
-// db.on('error', console.error.bind(console, 'connection error:'))
-// db.once('open', () => {
-//   console.log('connected to database!')
-//
-//   const router = express.Router()
-//
-//   let getScripts = (callback) => {
-//     let results = []
-//     db.collection('scripts.co').find({})
-//       .toArray((err, data) => {
-//         if (err) throw err
-//         data.forEach((data) => {
-//           results.push(data)
-//         })
-//         callback(results)
-//       })
-//   }
-//
-//   app.get('/api/all-scripts', (req, res) => {
-//     getScripts((data) => {
-//       return res.json(data)
-//     })
-//   })
-// })
+
 
 // Apply body Parser and server public assets and routes
 app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] :response-time ms'))
