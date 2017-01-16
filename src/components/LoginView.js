@@ -3,7 +3,27 @@ import { Button } from 'react-bootstrap'
 
 
 export default function LoginView(props) {
-  let { changeRoute, login } = props
+  let { auth, changeRoute, login, logout } = props
+  let authButton
+  if (auth) {
+    authButton = (
+      <Button bsStyle='danger'
+        bsSize='large'
+        block
+        onClick={logout}>
+        Logout
+      </Button>
+    )
+  } else {
+    authButton = (
+      <Button bsStyle='success'
+        bsSize='large'
+        block
+        onClick={login}>
+        Login
+      </Button>
+    )
+  }
   return (
     <div className='Login'>
       <h1>Choose an option:</h1>
@@ -14,12 +34,7 @@ export default function LoginView(props) {
           onClick={() => changeRoute('/demo')}>
           Quick Start - Demo
         </Button>
-        <Button bsStyle='success'
-          bsSize='large'
-          block
-          onClick={login}>
-          Login
-        </Button>
+        {authButton}
       </div>
     </div>
   )

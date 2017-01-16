@@ -8,6 +8,7 @@ class Login extends Component {
   constructor(props, context) {
     super(props, context)
     this.handleLogin = this.handleLogin.bind(this)
+    this.handleLogout = this.handleLogout.bind(this)
     this.handleRoute = this.handleRoute.bind(this)
   }
 
@@ -20,10 +21,15 @@ class Login extends Component {
     dispatch(actions.login())
   }
 
+  handleLogout() {
+    let { dispatch } = this.props
+    dispatch(actions.logout())
+  }
+
   render() {
     console.log('props', this.props)
     return(
-      <LoginView changeRoute={this.handleRoute} login={this.handleLogin} />
+      <LoginView auth={this.props.isAuthenticated} changeRoute={this.handleRoute} login={this.handleLogin} logout={this.handleLogout} />
     )
   }
 }
@@ -32,4 +38,12 @@ Login.contextTypes = {
   router: T.object
 }
 
-export default connect()(Login)
+const mapStateToProps = (state) => {
+  const { auth } = state
+  const { isAuthenticated } = auth
+  return {
+    isAuthenticated
+  }
+}
+
+export default connect(mapStateToProps)(Login)
