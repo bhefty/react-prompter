@@ -27,7 +27,6 @@ class Login extends Component {
   }
 
   render() {
-    console.log('props', this.props)
     return(
       <LoginView auth={this.props.isAuthenticated} changeRoute={this.handleRoute} login={this.handleLogin} logout={this.handleLogout} />
     )
