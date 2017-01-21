@@ -8,3 +8,12 @@ export function showUser(req, res) {
     res.json({ users })
   })
 }
+
+export function allScripts(req, res) {
+  User.find({'userId': req.params.user}, (err, doc) => {
+    if (err) {
+      res.status(500).send(err)
+    }
+    res.json(doc[0].scripts)
+  })
+}

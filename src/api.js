@@ -1,5 +1,5 @@
-function fetchAllScripts(cb) {
-  return fetch('api/users', {
+function fetchAllScripts(user, cb) {
+  return fetch(`api/all/${user}`, {
     accept: 'application/json',
   }).then(checkStatus)
     .then(parseJSON)

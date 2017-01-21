@@ -2,6 +2,7 @@ import React from 'react'
 import { Button } from 'react-bootstrap'
 
 import Prompter from '../containers/Prompter'
+import Scripts from './Scripts'
 
 export default function HomeView(props) {
   let { testApi, promptText } = props
@@ -11,6 +12,8 @@ export default function HomeView(props) {
       <div>
         <h1>Home</h1>
         <Button onClick={testApi}>Test API</Button>
+        <Button>Select a Script</Button>
+        <Scripts />
       </div>
     )
   } else {
